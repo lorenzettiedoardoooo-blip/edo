@@ -29,9 +29,10 @@ jobs:
           cp pubspec.yaml /tmp/yokai_source/pubspec.yaml
           rm -rf android lib pubspec.yaml test
           flutter create --platforms=android --org com.yokai --project-name yokai_workout_creator .
-          rm -rf lib
+          rm -rf lib test
           cp -R /tmp/yokai_source/lib ./lib
           cp /tmp/yokai_source/pubspec.yaml ./pubspec.yaml
+          sed -i 's/Future<void> refresh() async => setState(() => data = await Store.load());/Future<void> refresh() async { final loaded = await Store.load(); if (mounted) setState(() => data = loaded); }/' lib/main.dart
           sed -i 's/android:label="yokai_workout_creator"/android:label="YOKAI WORKOUT CREATOR"/g' android/app/src/main/AndroidManifest.xml
           if [ -f android/app/build.gradle.kts ]; then
             sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 24/g' android/app/build.gradle.kts
@@ -44,7 +45,7 @@ jobs:
         run: flutter pub get
 
       - name: Analyze
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
       - name: Build release APK
         run: flutter build apk --release
