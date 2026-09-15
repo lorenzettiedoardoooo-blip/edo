@@ -9,6 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 flutter:

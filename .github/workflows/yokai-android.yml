@@ -30,6 +30,29 @@ jobs:
           log-accepted-android-sdk-licenses: false
       - run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
       - run: bash tool/build-apk.sh
+      - name: Enable Android virtual device
+        run: sudo chmod 666 /dev/kvm
+      - name: Test Android storage, gallery and editor
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          target: google_apis
+          profile: pixel_2
+          disable-animations: true
+          working-directory: yokai_workout_creator
+          script: flutter test integration_test/device_test.dart --reporter expanded
+      - name: Collect Android screenshots
+        if: always()
+        run: |
+          mkdir -p build/device-qa
+          adb pull /sdcard/Pictures/YOKAI build/device-qa || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Android-device-QA
+          path: yokai_workout_creator/build/device-qa
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
           name: YOKAI-APK
