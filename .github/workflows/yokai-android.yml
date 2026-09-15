@@ -41,12 +41,7 @@ jobs:
           profile: pixel_2
           disable-animations: true
           working-directory: yokai_workout_creator
-          script: flutter test integration_test/device_test.dart --reporter expanded
-      - name: Collect Android screenshots
-        if: always()
-        run: |
-          mkdir -p build/device-qa
-          adb pull /sdcard/Pictures/YOKAI build/device-qa || true
+          script: bash tool/device-test.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:

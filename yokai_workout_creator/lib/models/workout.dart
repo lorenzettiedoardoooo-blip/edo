@@ -67,7 +67,7 @@ class Workout {
   factory Workout.empty() => Workout(id: newId(), title: 'YOKAI FITNESS', date: today(),
     cells: List.generate(15, (_) => List.generate(10, (_) => Cell())),
     widths: List.generate(10, (i) => i == 0 ? 220.0 : 100.0),
-    heights: List.filled(15, 58.0));
+    heights: List.filled(15, 58.0, growable: true));
   factory Workout.template(String name) {
     final w = Workout.empty();
     if (name == 'EMPTY') return w;
