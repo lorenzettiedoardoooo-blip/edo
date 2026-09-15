@@ -1,0 +1,39 @@
+name: Build Android APK
+on:
+  push:
+    branches: [yokai-workout-creator-grid]
+    paths: ['yokai_workout_creator/**', '.github/workflows/yokai-android.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: yokai_workout_creator
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.7'
+          channel: stable
+          cache: true
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - run: bash tool/build-apk.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YOKAI-APK
+          path: yokai_workout_creator/build/app/outputs/flutter-apk/app-release.apk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rendering-QA
+          path: yokai_workout_creator/build/qa/*.png
+          if-no-files-found: ignore

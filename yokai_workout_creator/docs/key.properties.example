@@ -1,0 +1,6 @@
+# Copy to android/key.properties ONLY after creating your own keystore.
+# Use forward slashes in Windows paths. Do not commit the real file.
+storePassword=YOUR_PRIVATE_PASSWORD
+keyPassword=YOUR_PRIVATE_PASSWORD
+keyAlias=yokai
+storeFile=C:/private/yokai-release.jks

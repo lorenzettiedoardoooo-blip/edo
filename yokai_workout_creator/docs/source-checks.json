@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "checks": [
+    "balanced delimiters and strings",
+    "local Dart import targets",
+    "Android XML parsing",
+    "Dart/native channel method parity",
+    "release network permission absent",
+    "legacy storage permission restricted",
+    "share provider not exported",
+    "no private signing keys"
+  ],
+  "dart_files": 18,
+  "kotlin_and_gradle_files": 5,
+  "xml_files": 6,
+  "platform_methods": [
+    "deleteWorkout",
+    "encodeJpg",
+    "pickLogo",
+    "readSettings",
+    "readWorkouts",
+    "saveImage",
+    "shareImage",
+    "writeSettings",
+    "writeWorkout"
+  ],
+  "not_executed": [
+    "flutter analyze",
+    "flutter test",
+    "APK build",
+    "Android device tests",
+    "visual raster QA"
+  ]
+}
